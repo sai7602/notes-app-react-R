@@ -1,41 +1,8 @@
-import React, { useId } from 'react';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import { v4 as uuidv4 } from 'uuid';
+import React from 'react';
 
-import {
-	Table,
-	TableBody,
-	TableHead,
-	TableRow,
-	TableCell,
-	TablePagination,
-	TableSortLabel,
-	TableContainer,
-} from '@mui/material';
+import { TableHead, TableRow, TableCell } from '@mui/material';
 
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import { visuallyHidden } from '@mui/utils';
-import {
-	DeleteTwoTone,
-	ShoppingCartTwoTone,
-	ArchiveTwoTone,
-	UnarchiveTwoTone,
-	Inventory2TwoTone,
-	TipsAndUpdatesTwoTone,
-	FormatQuoteTwoTone,
-	PsychologyTwoTone,
-	EditTwoTone,
-} from '@mui/icons-material';
 import './ActiveNotesTable.scss';
-import { Order } from '../types';
 
 export interface Data {
 	id: string;
