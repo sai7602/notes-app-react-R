@@ -1,141 +1,33 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Data } from '../types';
 import parseDate from '../utils/parseDate';
-const initialData: Data[] = [
-	{
-		id: uuidv4(),
-		name: 'Shopping Task ',
-		createDate: '305',
-		category: 'Task',
-		content: '1',
-		modificationDate: '4.3',
-		icon: 'Task',
-		isArchived: true,
-	},
-	{
-		id: uuidv4(),
-		name: 'Random Thought',
-		createDate: '305',
-		category: 'Random Thought',
-		content: '2',
-		modificationDate: '4.3',
-		icon: 'Random Thought',
-		isArchived: false,
-	},
-	{
-		id: uuidv4(),
-		name: 'Quote',
-		createDate: '305',
-		category: 'Quote',
-		content: '3',
-		modificationDate: '4.3',
-		icon: 'Quote',
-		isArchived: true,
-	},
-	{
-		id: uuidv4(),
-		name: 'Idea',
-		createDate: '305',
-		category: 'Idea',
-		content: '4',
-		modificationDate: '4.3',
-		icon: 'Idea',
-		isArchived: false,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '5',
-		modificationDate: '4.3',
-		icon: 'Task',
-		isArchived: true,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '6',
-		modificationDate: '35',
-		icon: 'Task',
-		isArchived: false,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '7',
-		modificationDate: '48',
-		icon: 'Task',
-		isArchived: true,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '8',
-		modificationDate: '45',
-		icon: 'Task',
-		isArchived: false,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '8',
-		modificationDate: '45',
-		icon: 'Task',
-		isArchived: false,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '8',
-		modificationDate: '45',
-		icon: 'Task',
-		isArchived: false,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '8',
-		modificationDate: '45',
-		icon: 'Task',
-		isArchived: false,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '8',
-		modificationDate: parseDate(
-			'sasda 3/32/020 asdf sasda 3/3/2020 asdfsasda 13/3/2020 asdf'
-		),
-		icon: 'Task',
-		isArchived: true,
-	},
-	{
-		id: uuidv4(),
-		name: 'New Task',
-		createDate: '305',
-		category: 'Task',
-		content: '8',
-		modificationDate: '45',
-		icon: 'Task',
-		isArchived: false,
-	},
-];
+import { faker } from '@faker-js/faker';
+import categories from './categoryList';
 
-console.log(initialData);
+const initialData: Data[] = new Array(20).fill({}).map(() => {
+	const randomCategory = faker.datatype.number({
+		min: 1,
+		max: 4,
+	});
+	const selectedCategory = categories.filter(
+		(cat) => cat.catId === `${randomCategory}`
+	)[0];
+	const fakeDate = faker.date
+		.between('2022-08-08T00:00:00.000Z', '2022-09-12T00:00:00.000Z')
+		.toLocaleDateString('en-us', {
+			year: 'numeric',
+			month: 'numeric',
+			day: 'numeric',
+		});
+	const fakeContent = `${faker.company.catchPhrase()} ${fakeDate} ${faker.company.name()}`;
+	return {
+		id: faker.datatype.uuid(),
+		name: faker.commerce.product(),
+		createDate: fakeDate,
+		category: selectedCategory.catName,
+		content: fakeContent,
+		modificationDate: parseDate(fakeContent),
+		isArchived: faker.datatype.boolean(),
+	};
+});
 
 export default initialData;

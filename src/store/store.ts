@@ -4,7 +4,6 @@ import { modalsVisibilityReducer } from './reducer/modalsVisibilityReducer';
 
 import { noteReducer } from './reducer/noteReducer';
 
-console.log(loadState());
 const reducer = {
 	modalVisibility: modalsVisibilityReducer,
 	notes: noteReducer,
@@ -16,6 +15,8 @@ const store = configureStore({
 		modalVisibility: {
 			visibilityAddEditModal: false,
 			visibilityArchiveDelete: false,
+			mode: '',
+			id: '',
 		},
 	},
 });

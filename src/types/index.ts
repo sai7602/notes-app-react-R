@@ -5,8 +5,13 @@ export interface Data {
 	category: string;
 	content: string;
 	modificationDate: string;
-	icon: any;
 	isArchived: any;
 }
 
+export type SummaryData = {
+	categoryId: string;
+	categoryName: string;
+	totalActive: number;
+	totalArchived: number;
+};
 export type Order = 'asc' | 'desc';

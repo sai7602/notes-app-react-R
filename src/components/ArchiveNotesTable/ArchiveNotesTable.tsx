@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 
 import {
@@ -16,21 +16,24 @@ import { Data, Order } from '../../types';
 import categoryIcon from '../../utils/categoryIcon';
 import getComparator from '../../utils/getComparator';
 import stableSort from '../../utils/stableSort';
-// import initialAllData from '../../data/initialData';
 import ArchiveNotesTableHead from './ArchiveNotesTableHead';
 import TableTitle from '../TableTitle';
 import '../ActiveNotesTable.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { archivedNoteSelector } from '../../store/selectors/archivedNoteSelector';
-import { archiveNoteAction } from '../../store/actions/archiveNoteAction';
-// const initialData = initialAllData.filter((data) => data.isArchived);
+import { visibilityArchiveDelete } from '../../store/actions/visibilityArchiveDelete';
+import { changeMode } from '../../store/actions/changeMode';
+import { changeNoteId } from '../../store/actions/changeNoteId';
 
 function ArchiveNotesTable() {
 	const initialData = useSelector(archivedNoteSelector);
-	const [order, setOrder] = React.useState<Order>('asc');
-	const [orderBy, setOrderBy] = React.useState<keyof Data>('name');
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	const mode = useSelector((state: any) => state.modalVisibility.mode);
+	console.log(initialData);
+	console.log(mode);
+	const [order, setOrder] = useState<Order>('asc');
+	const [orderBy, setOrderBy] = useState<keyof Data>('name');
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(5);
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
@@ -43,8 +46,11 @@ function ArchiveNotesTable() {
 
 	const dispatch = useDispatch();
 
-	const handleArchive = (id: any) => {
-		dispatch(archiveNoteAction(id));
+	const handleArchive = (id: string) => {
+		console.log(id);
+		dispatch(changeMode('UnArchive Note'));
+		dispatch(changeNoteId(id));
+		dispatch(visibilityArchiveDelete());
 	};
 	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage);
@@ -92,7 +98,7 @@ function ArchiveNotesTable() {
 											key={row.id}
 										>
 											<TableCell>
-												{categoryIcon(row.icon as any)}
+												{categoryIcon(row.category)}
 											</TableCell>
 											<TableCell
 												component="th"
@@ -101,16 +107,16 @@ function ArchiveNotesTable() {
 											>
 												{row.name}
 											</TableCell>
-											<TableCell align="right">
+											<TableCell align="left">
 												{row.createDate}
 											</TableCell>
-											<TableCell align="right">
+											<TableCell align="left">
 												{row.category}
 											</TableCell>
-											<TableCell align="right">
+											<TableCell align="left">
 												{row.content}
 											</TableCell>
-											<TableCell align="right">
+											<TableCell align="left">
 												{row.modificationDate}
 											</TableCell>
 
@@ -138,6 +144,7 @@ function ArchiveNotesTable() {
 					onRowsPerPageChange={handleChangeRowsPerPage}
 				/>
 			</Paper>
+			<Box justifyContent={'center'} display={'flex'}></Box>
 		</Box>
 	);
 }

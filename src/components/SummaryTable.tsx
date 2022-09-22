@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 
 import {
@@ -13,12 +12,14 @@ import Paper from '@mui/material/Paper';
 
 import './ActiveNotesTable.scss';
 import categoryIcon from '../utils/categoryIcon';
-import initialAllData from '../data/initialData';
 import TableTitle from './TableTitle';
 import SummaryTableHead from './SummaryTableHead';
-const initialData = initialAllData.filter((data) => data.isArchived);
-
+import SummaryResult from '../data/summaryResuls';
+import { useSelector } from 'react-redux';
+import { Data } from '../types';
 function SummaryTable() {
+	const allDAta: Data[] = useSelector((state: any) => state.notes);
+	const sum = SummaryResult(allDAta);
 	return (
 		<Box sx={{ width: '100%', padding: '20px' }}>
 			<Paper elevation={0} sx={{ width: '100%', mb: 3, p: 3 }}>
@@ -31,13 +32,17 @@ function SummaryTable() {
 					>
 						<SummaryTableHead />
 						<TableBody sx={{ width: '100%', mb: 3, p: 3 }}>
-							{initialData.map((row, index) => {
+							{sum.map((row, index) => {
 								const labelId = `enhanced-table-checkbox-${index}`;
 
 								return (
-									<TableRow hover tabIndex={-1} key={row.id}>
+									<TableRow
+										hover
+										tabIndex={-1}
+										key={row.categoryId}
+									>
 										<TableCell>
-											{categoryIcon(row.icon)}
+											{categoryIcon(row.categoryName)}
 										</TableCell>
 										<TableCell
 											component="th"
@@ -45,13 +50,13 @@ function SummaryTable() {
 											scope="row"
 											align="center"
 										>
-											{row.name}
+											{row.categoryName}
 										</TableCell>
 										<TableCell align="center">
-											{row.createDate}
+											{row.totalActive}
 										</TableCell>
 										<TableCell align="center">
-											{row.category}
+											{row.totalArchived}
 										</TableCell>
 									</TableRow>
 								);
