@@ -1,0 +1,38 @@
+.test {
+	color: antiquewhite;
+	background: rgb(245, 86, 86);
+	border-spacing: 0 5px !important;
+	border-collapse: separate !important;
+}
+// .MuiTableContainer-root {
+// 	box-shadow: none;
+// }
+
+.MuiTable-root {
+	border-collapse: separate !important;
+	border-spacing: 0 20px;
+	border: transparent;
+}
+
+.MuiTable-root th,
+.MuiTable-root td {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+.MuiTable-root th:first-child,
+.MuiTable-root td:first-child {
+	border-left: 1px solid black;
+
+	border-radius: 10px 0 0 10px;
+}
+.MuiTable-root th:last-child,
+.MuiTable-root td:last-child {
+	margin: 10px;
+	border-right: 1px solid black;
+	border-radius: 0 10px 10px 0;
+}
+.table {
+	border-collapse: separate !important;
+	border-spacing: 0px 10px !important;
+	margin: 0 !important;
+}
