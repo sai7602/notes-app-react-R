@@ -8,6 +8,7 @@ import {
 	TableCell,
 	TablePagination,
 	TableContainer,
+	Tooltip,
 } from '@mui/material';
 
 import Paper from '@mui/material/Paper';
@@ -27,9 +28,6 @@ import { changeNoteId } from '../../store/actions/changeNoteId';
 
 function ArchiveNotesTable() {
 	const initialData = useSelector(archivedNoteSelector);
-	const mode = useSelector((state: any) => state.modalVisibility.mode);
-	console.log(initialData);
-	console.log(mode);
 	const [order, setOrder] = useState<Order>('asc');
 	const [orderBy, setOrderBy] = useState<keyof Data>('name');
 	const [page, setPage] = useState(0);
@@ -47,7 +45,6 @@ function ArchiveNotesTable() {
 	const dispatch = useDispatch();
 
 	const handleArchive = (id: string) => {
-		console.log(id);
 		dispatch(changeMode('UnArchive Note'));
 		dispatch(changeNoteId(id));
 		dispatch(visibilityArchiveDelete());
@@ -121,12 +118,18 @@ function ArchiveNotesTable() {
 											</TableCell>
 
 											<TableCell
+												style={{ cursor: 'pointer' }}
 												onClick={() =>
 													handleArchive(row.id)
 												}
 												align="right"
 											>
-												<UnarchiveTwoTone />
+												<Tooltip
+													title="Move Note From Archive"
+													arrow
+												>
+													<UnarchiveTwoTone />
+												</Tooltip>
 											</TableCell>
 										</TableRow>
 									);

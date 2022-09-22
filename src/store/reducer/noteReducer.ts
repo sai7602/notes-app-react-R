@@ -15,13 +15,9 @@ interface NoteAction {
 export const noteReducer = (state: Data[] = [], action: NoteAction): Data[] => {
 	switch (action.type) {
 		case ARCHIVE_NOTES: {
-			console.log(action.id);
-			console.log(action);
 			return state.map((note: Data) => {
 				const editedNote = { ...note };
 				if (editedNote.id === action.id) {
-					console.log('first');
-					console.log(editedNote.id);
 					editedNote.isArchived = !editedNote.isArchived;
 				}
 				return editedNote;

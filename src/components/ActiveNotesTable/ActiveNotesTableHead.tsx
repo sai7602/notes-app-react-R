@@ -1,7 +1,13 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 
-import { TableHead, TableRow, TableCell, TableSortLabel } from '@mui/material';
+import {
+	TableHead,
+	TableRow,
+	TableCell,
+	TableSortLabel,
+	Tooltip,
+} from '@mui/material';
 
 import { visuallyHidden } from '@mui/utils';
 import { DeleteTwoTone, Inventory2TwoTone } from '@mui/icons-material';
@@ -100,8 +106,14 @@ function ActiveNotesTableHead(props: EnhancedTableProps) {
 				<TableCell align="right">
 					<Inventory2TwoTone />
 				</TableCell>
-				<TableCell align="right" onClick={handleClearLocalStorage}>
-					<DeleteTwoTone />
+				<TableCell
+					style={{ cursor: 'pointer' }}
+					align="right"
+					onClick={handleClearLocalStorage}
+				>
+					<Tooltip title="Clear Local Storage" arrow>
+						<DeleteTwoTone />
+					</Tooltip>
 				</TableCell>
 			</TableRow>
 		</TableHead>

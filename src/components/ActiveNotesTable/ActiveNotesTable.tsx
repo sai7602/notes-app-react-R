@@ -11,6 +11,7 @@ import {
 	Paper,
 	Box,
 	Button,
+	Tooltip,
 } from '@mui/material';
 
 import {
@@ -140,28 +141,46 @@ function ActiveNotesTable() {
 												{row.modificationDate}
 											</TableCell>
 											<TableCell
+												style={{ cursor: 'pointer' }}
 												onClick={() =>
 													handleEdit(row.id)
 												}
 												align="right"
 											>
-												<EditTwoTone />
+												<Tooltip
+													title="Edit Note"
+													arrow
+												>
+													<EditTwoTone />
+												</Tooltip>
 											</TableCell>
 											<TableCell
+												style={{ cursor: 'pointer' }}
 												onClick={() =>
 													handleArchive(row.id)
 												}
 												align="right"
 											>
-												<ArchiveTwoTone />
+												<Tooltip
+													title="Move Note To Archive"
+													arrow
+												>
+													<ArchiveTwoTone />
+												</Tooltip>
 											</TableCell>
 											<TableCell
+												style={{ cursor: 'pointer' }}
 												onClick={() =>
 													handleDelete(row.id)
 												}
 												align="right"
 											>
-												<DeleteTwoTone />
+												<Tooltip
+													title="Delete note"
+													arrow
+												>
+													<DeleteTwoTone />
+												</Tooltip>
 											</TableCell>
 										</TableRow>
 									);

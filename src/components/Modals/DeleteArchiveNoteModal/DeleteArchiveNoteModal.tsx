@@ -17,10 +17,8 @@ export default function DeleteArchiveNoteModal() {
 	const visuallyHidden = useSelector(visuallyHiddenSelector);
 	const mode = useSelector((state: any) => state.modalVisibility.mode);
 	const noteIds = useSelector((state: any) => state.modalVisibility.id);
-	console.log('test2', noteIds);
 	const dispatch = useDispatch();
 	const operationName = () => {
-		console.log(mode);
 		if (mode === 'Delete Note') {
 			return 'deleted';
 		}
@@ -33,7 +31,6 @@ export default function DeleteArchiveNoteModal() {
 	};
 	const handleClose = () => dispatch(visibilityArchiveDelete());
 	const handleAddConfirm = () => {
-		console.log(mode);
 		if (mode === 'Delete Note') {
 			dispatch(deleteNoteAction(noteIds));
 			handleClose();
@@ -43,7 +40,6 @@ export default function DeleteArchiveNoteModal() {
 			handleClose();
 		}
 		if (mode === 'UnArchive Note') {
-			console.log('sadsadsadsa');
 			dispatch(archiveNoteAction(noteIds));
 			handleClose();
 		}

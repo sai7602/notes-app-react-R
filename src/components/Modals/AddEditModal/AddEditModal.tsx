@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { CancelTwoTone } from '@mui/icons-material';
 import styles from './AddEditModal.module.scss';
-import { Grid, MenuItem, TextField } from '@mui/material';
+import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
 import categories from '../../../data/categoryList';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHiddenSelector } from '../../../store/selectors/visuallyHiddenSelector';
@@ -54,8 +54,6 @@ export default function AddEditModal() {
 				name: noteName,
 				category,
 			};
-			console.log(addData);
-			console.log(mode);
 			dispatch(addNoteAction(addData));
 		}
 		if (mode === 'Edit Note') {
@@ -68,10 +66,8 @@ export default function AddEditModal() {
 				name: noteName,
 				category,
 			};
-			console.log(editData);
 			dispatch(editNoteAction(editData));
 		}
-		console.log(event);
 		handleClose();
 	};
 	const handleChangeCategory = (
@@ -132,63 +128,69 @@ export default function AddEditModal() {
 						flexDirection="column"
 						alignItems={'center'}
 					>
-						<TextField
-							id="outlined-basic"
-							label="Note Name"
-							variant="outlined"
-							placeholder="Input Note Name"
-							value={noteName}
-							onChange={handleChangeCategoryName}
-						/>
-						<TextField
-							id="outlined-textarea"
-							label="Content"
-							placeholder="Input Note Content"
-							multiline
-							value={categoryContent}
-							onChange={handleChangeCategoryContent}
-						/>
-						<TextField
-							id="outlined-select-currency"
-							select
-							label="Select"
-							value={category}
-							onChange={handleChangeCategory}
-							helperText="Please Select Category"
-						>
-							{categories.map((option) => (
-								<MenuItem
-									key={option.catId}
-									value={option.catName}
-								>
-									{option.catName}
-								</MenuItem>
-							))}
-						</TextField>
+						<FormControl>
+							<TextField
+								id="outlined-basic"
+								label="Note Name"
+								variant="outlined"
+								placeholder="Input Note Name"
+								value={noteName}
+								onChange={handleChangeCategoryName}
+								required
+							/>
+							<TextField
+								id="outlined-textarea"
+								label="Content"
+								placeholder="Input Note Content"
+								multiline
+								value={categoryContent}
+								onChange={handleChangeCategoryContent}
+								required
+							/>
+							<TextField
+								id="outlined-select-currency"
+								select
+								label="Select"
+								value={category}
+								onChange={handleChangeCategory}
+								helperText="Please Select Category"
+							>
+								{categories.map((option) => (
+									<MenuItem
+										key={option.catId}
+										value={option.catName}
+									>
+										{option.catName}
+									</MenuItem>
+								))}
+							</TextField>
 
-						<Grid
-							container
-							justifyContent={'center'}
-							spacing={2}
-							m={0}
-						>
-							<Grid item={true} xs={4}>
-								<Button
-									onClick={handleClose}
-									variant="contained"
-								>
-									Cancel
-								</Button>
+							<Grid
+								container
+								justifyContent={'center'}
+								spacing={2}
+								m={0}
+							>
+								<Grid item={true} xs={4}>
+									<Button
+										onClick={handleClose}
+										variant="contained"
+									>
+										Cancel
+									</Button>
+								</Grid>
+								<Grid item={true} xs={4}>
+									<Button
+										onClick={(event) =>
+											handleAddConfirm(event)
+										}
+										variant="contained"
+									>
+										Confirm
+									</Button>
+								</Grid>
 							</Grid>
-							<Grid item={true} xs={4}>
-								<Button
-									onClick={(event) => handleAddConfirm(event)}
-									variant="contained"
-								>
-									Confirm
-								</Button>
-							</Grid>
-						</Grid>
+						</FormControl>
 					</Box>
 				</Box>
 			</Modal>

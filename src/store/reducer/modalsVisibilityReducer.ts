@@ -38,16 +38,11 @@ export const modalsVisibilityReducer = (
 		case CHANGE_MODE: {
 			const editedState = { ...state };
 			editedState.mode = action.mode;
-			editedState.id = action.id;
 			return editedState;
 		}
 		case CHANGE_NOTE_ID: {
-			console.log('action ---', action);
-			console.log('stare ---', state);
 			const editedState = { ...state };
 			editedState.id = action.id;
-
-			console.log('editedState +++++++++', editedState);
 			return editedState;
 		}
 
