@@ -25,18 +25,25 @@ import getComparator from '../../utils/getComparator';
 import stableSort from '../../utils/stableSort';
 import ActiveNotesTableHead from './ActiveNotesTableHead';
 import TableTitle from '../TableTitle';
-import AddEditModal from '../AddEditModal/AddEditModal';
+import AddEditModal from '../Modals/AddEditModal/AddEditModal';
 import { activeNoteSelector } from '../../store/selectors/activeNoteSelector';
-import { archiveNoteAction } from '../../store/actions/archiveNoteAction';
-import { deleteNoteAction } from '../../store/actions/deleteNoteAction';
 
 import '../ActiveNotesTable.scss';
 import { visibilityAddEditModal } from '../../store/actions/visibilityAddEditModal';
+import { visibilityArchiveDelete } from '../../store/actions/visibilityArchiveDelete';
+import DeleteArchiveNoteModal from '../Modals/DeleteArchiveNoteModal/DeleteArchiveNoteModal';
+import { visuallyHiddenSelector } from '../../store/selectors/visuallyHiddenSelector';
+import { changeMode } from '../../store/actions/changeMode';
+import { changeNoteId } from '../../store/actions/changeNoteId';
 
 function ActiveNotesTable() {
+	const dispatch = useDispatch();
 	const initialData = useSelector(activeNoteSelector);
-
-	const handleOpen = () => dispatch(visibilityAddEditModal());
+	const visuallyHidden = useSelector(visuallyHiddenSelector);
+	const handleOpen = () => {
+		dispatch(changeMode('Add Note'));
+		dispatch(visibilityAddEditModal());
+	};
 	const [order, setOrder] = useState<Order>('asc');
 	const [orderBy, setOrderBy] = useState<keyof Data>('name');
 	const [page, setPage] = useState(0);
@@ -49,7 +56,6 @@ function ActiveNotesTable() {
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
 	};
-	const dispatch = useDispatch();
 
 	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage);
@@ -63,15 +69,19 @@ function ActiveNotesTable() {
 	};
 
 	const handleArchive = (id: string) => {
-		dispatch(archiveNoteAction(id));
+		dispatch(changeMode('Archive Note'));
+		dispatch(changeNoteId(id));
+		dispatch(visibilityArchiveDelete());
 	};
-	const handleEdit = (e: any) => {
-		handleOpen();
-		console.log(e);
+	const handleEdit = (id: string) => {
+		dispatch(changeMode('Edit Note'));
+		dispatch(changeNoteId(id));
+		dispatch(visibilityAddEditModal());
 	};
 	const handleDelete = (id: string) => {
-		console.log(id);
-		dispatch(deleteNoteAction(id));
+		dispatch(changeMode('Delete Note'));
+		dispatch(changeNoteId(id));
+		dispatch(visibilityArchiveDelete());
 	};
 	return (
 		<Box sx={{ width: '100%', padding: '20px' }}>
@@ -108,7 +118,7 @@ function ActiveNotesTable() {
 											key={row.id}
 										>
 											<TableCell>
-												{categoryIcon(row.icon)}
+												{categoryIcon(row.category)}
 											</TableCell>
 											<TableCell
 												component="th"
@@ -130,7 +140,9 @@ function ActiveNotesTable() {
 												{row.modificationDate}
 											</TableCell>
 											<TableCell
-												onClick={handleEdit}
+												onClick={() =>
+													handleEdit(row.id)
+												}
 												align="right"
 											>
 												<EditTwoTone />
@@ -170,7 +182,16 @@ function ActiveNotesTable() {
 					<Button onClick={handleOpen} variant="contained">
 						Add Note
 					</Button>
-					<AddEditModal mode="Add Note" />
+					{visuallyHidden.visibilityAddEditModal ? (
+						<AddEditModal />
+					) : (
+						''
+					)}
+					{visuallyHidden.visibilityArchiveDelete ? (
+						<DeleteArchiveNoteModal />
+					) : (
+						''
+					)}
 				</Box>
 			</Paper>
 		</Box>

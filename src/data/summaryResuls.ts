@@ -1,39 +1,20 @@
-import initialData from './initialData';
+import { Data, SummaryData } from '../types';
+import categories from './categoryList';
+const SummaryResult = (allData: Data[]): SummaryData[] => {
+	const allSummary: any = [];
 
-const renderPage = () => {
-	const data =
-		JSON.parse(localStorage.getItem('list') as string) || initialData;
-
-	const allSummary = [];
-
-	type summaryData = {
-		catImg: string;
-		nameInput: string;
-		totalActive: number;
-		totalArchived: number;
-	};
+	categories.forEach((category) => {
+		const filteredEl = allData.filter(
+			(data) => data.category === category.catName
+		);
+		const summaryData: SummaryData = {
+			categoryId: category.catId,
+			categoryName: category.catName,
+			totalActive: filteredEl.filter((rec) => !rec.isArchived).length,
+			totalArchived: filteredEl.filter((rec) => rec.isArchived).length,
+		};
+		allSummary.push(summaryData);
+	});
+	return allSummary;
 };
-//   const renderNotes = data
-//     .filter(rec => !rec.archived)
-//     .map(rec => ` ${createNote(rec)} `)
-//     .join('');
-//   const renderArchived = data
-//     .filter(rec => rec.archived)
-//     .map(rec => ` ${archivedNote(rec)} `)
-//     .join('');
-//   categories.forEach(el => {
-//     const filteredEl = data.filter(rec => rec.catId == el.catId);
-//     const summaryData = {
-//       catImg: el.catImg,
-//       nameInput: el.catName,
-//       totalActive: filteredEl.filter(rec => !rec.archived).length,
-//       totalArchived: filteredEl.filter(rec => rec.archived).length,
-//     };
-//     allSummary.push(summaryData);
-//   });
-//   const renderSummary = allSummary
-//     .filter(rec => rec.totalActive > 0 || rec.totalArchived > 0)
-//     .map(rec => ` ${summaryNotes(rec)} `)
-//     .join('');
-// };
-export default renderPage;
+export default SummaryResult;

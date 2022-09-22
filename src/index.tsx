@@ -6,7 +6,6 @@ import App from './App';
 import CssBaseline from '@mui/material/CssBaseline';
 const container = document.getElementById('root')!;
 const root = createRoot(container);
-console.log(store.getState());
 root.render(
 	<React.StrictMode>
 		<Provider store={store}>

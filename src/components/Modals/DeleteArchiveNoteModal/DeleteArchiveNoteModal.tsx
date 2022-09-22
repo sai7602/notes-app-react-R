@@ -1,30 +1,58 @@
-import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { CancelTwoTone } from '@mui/icons-material';
-import styles from './AddEditModal.module.scss';
-import { Grid, MenuItem, TextField } from '@mui/material';
-import categories from '../../data/categoryList';
-import { useDispatch, useSelector } from 'react-redux';
-import { visuallyHiddenSelector } from '../../store/selectors/visuallyHiddenSelector';
-import { visibilityAddEditModal } from '../../store/actions/visibilityAddEditModal';
+import { Grid } from '@mui/material';
+import { visuallyHiddenSelector } from '../../../store/selectors/visuallyHiddenSelector';
+import { visibilityArchiveDelete } from '../../../store/actions/visibilityArchiveDelete';
 
-export default function AddEditModal({ mode }: { mode: string }) {
+import styles from './DeleteArchiveNoteModal.module.scss';
+import { deleteNoteAction } from '../../../store/actions/deleteNoteAction';
+import { archiveNoteAction } from '../../../store/actions/archiveNoteAction';
+
+export default function DeleteArchiveNoteModal() {
 	const visuallyHidden = useSelector(visuallyHiddenSelector);
+	const mode = useSelector((state: any) => state.modalVisibility.mode);
+	const noteIds = useSelector((state: any) => state.modalVisibility.id);
+	console.log('test2', noteIds);
 	const dispatch = useDispatch();
-
-	const handleClose = () => dispatch(visibilityAddEditModal());
-	const [category, setCategory] = useState(categories[0].catName);
-	const handleAddConfirm = () => console.log('first');
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setCategory(event.target.value);
+	const operationName = () => {
+		console.log(mode);
+		if (mode === 'Delete Note') {
+			return 'deleted';
+		}
+		if (mode === 'Archive Note') {
+			return 'moved to archive';
+		}
+		if (mode === 'UnArchive Note') {
+			return 'moved from archive to active list';
+		}
 	};
+	const handleClose = () => dispatch(visibilityArchiveDelete());
+	const handleAddConfirm = () => {
+		console.log(mode);
+		if (mode === 'Delete Note') {
+			dispatch(deleteNoteAction(noteIds));
+			handleClose();
+		}
+		if (mode === 'Archive Note') {
+			dispatch(archiveNoteAction(noteIds));
+			handleClose();
+		}
+		if (mode === 'UnArchive Note') {
+			console.log('sadsadsadsa');
+			dispatch(archiveNoteAction(noteIds));
+			handleClose();
+		}
+	};
+
 	return (
 		<div>
 			<Modal
-				open={visuallyHidden.visibilityAddEditModal}
+				open={visuallyHidden.visibilityArchiveDelete}
 				sx={{ m: 1 }}
 				onClose={handleClose}
 				aria-labelledby="modal-modal-title"
@@ -35,8 +63,7 @@ export default function AddEditModal({ mode }: { mode: string }) {
 						<Grid item={true} xs={11} justifyContent="center">
 							<Typography
 								id="modal-modal-title"
-								variant="h6"
-								// component="h1"
+								variant="h4"
 								align="center"
 							>
 								{mode}
@@ -65,35 +92,9 @@ export default function AddEditModal({ mode }: { mode: string }) {
 						flexDirection="column"
 						alignItems={'center'}
 					>
-						<TextField
-							id="outlined-basic"
-							label="Note Name"
-							variant="outlined"
-							placeholder="Input Note Name"
-						/>
-						<TextField
-							id="outlined-textarea"
-							label="Content"
-							placeholder="Input Note Content"
-							multiline
-						/>
-						<TextField
-							id="outlined-select-currency"
-							select
-							label="Select"
-							value={category}
-							onChange={handleChange}
-							helperText="Please Select Category"
-						>
-							{categories.map((option) => (
-								<MenuItem
-									key={option.catId}
-									value={option.catName}
-								>
-									{option.catName}
-								</MenuItem>
-							))}
-						</TextField>
+						<Typography variant="h4" component="h4">
+							Note will be {operationName()}.
+						</Typography>
 
 						<Grid
 							container
