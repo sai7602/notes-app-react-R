@@ -5,20 +5,12 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { CancelTwoTone } from '@mui/icons-material';
 import styles from './AddEditModal.module.scss';
-import { Container, Grid, MenuItem, Paper, TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Grid, MenuItem, TextField } from '@mui/material';
 import categories from '../../data/categoryList';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHiddenSelector } from '../../store/selectors/visuallyHiddenSelector';
 import { visibilityAddEditModal } from '../../store/actions/visibilityAddEditModal';
-console.log(styles);
-const Item = styled(Paper)(({ theme }) => ({
-	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-	...theme.typography.body2,
-	padding: theme.spacing(1),
-	textAlign: 'center',
-	color: theme.palette.text.secondary,
-}));
+
 export default function AddEditModal({ mode }: { mode: string }) {
 	const visuallyHidden = useSelector(visuallyHiddenSelector);
 	const dispatch = useDispatch();

@@ -31,7 +31,6 @@ import { archiveNoteAction } from '../../store/actions/archiveNoteAction';
 import { deleteNoteAction } from '../../store/actions/deleteNoteAction';
 
 import '../ActiveNotesTable.scss';
-import { visuallyHiddenSelector } from '../../store/selectors/visuallyHiddenSelector';
 import { visibilityAddEditModal } from '../../store/actions/visibilityAddEditModal';
 
 function ActiveNotesTable() {
