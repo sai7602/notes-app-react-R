@@ -56,7 +56,7 @@ interface EnhancedTableProps {
 }
 
 function ArchiveNotesTableHead(props: EnhancedTableProps) {
-	const { order, orderBy, rowCount, onRequestSort } = props;
+	const { order, orderBy, onRequestSort } = props;
 	const createSortHandler =
 		(property: keyof Data) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
