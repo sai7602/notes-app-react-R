@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { CancelTwoTone } from '@mui/icons-material';
 import styles from './AddEditModal.module.scss';
-import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
+import { Grid, MenuItem, Popover, TextField } from '@mui/material';
 import categories from '../../../data/categoryList';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHiddenSelector } from '../../../store/selectors/visuallyHiddenSelector';
@@ -28,7 +28,9 @@ export default function AddEditModal() {
 	});
 
 	const dispatch = useDispatch();
-
+	const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+		null
+	);
 	const [category, setCategory] = useState(
 		mode === 'Add Note'
 			? 'Task'
@@ -42,6 +44,8 @@ export default function AddEditModal() {
 	const [noteName, setNoteName] = useState(
 		mode === 'Add Note' ? '' : editedNoteData ? editedNoteData.name : ''
 	);
+	const [nameError, setNameError] = useState(false);
+	const [categoryError, setCategoryError] = useState(false);
 	const handleClose = () => dispatch(visibilityAddEditModal());
 	const handleAddConfirm = (event: any) => {
 		if (mode === 'Add Note') {
@@ -54,21 +58,38 @@ export default function AddEditModal() {
 				name: noteName,
 				category,
 			};
-			dispatch(addNoteAction(addData));
+			if (!noteName) {
+				setNameError(true);
+				handleClickPopover(event);
+			} else if (!categoryContent) {
+				setCategoryError(true);
+				handleClickPopover(event);
+			} else {
+				handleClose();
+				dispatch(addNoteAction(addData));
+			}
 		}
 		if (mode === 'Edit Note') {
 			const editData: Data = {
 				content: categoryContent,
 				id: editedNoteData.id,
-				createDate: getDate(),
+				createDate: editedNoteData.createDate,
 				isArchived: false,
 				modificationDate: parseDate(categoryContent),
 				name: noteName,
 				category,
 			};
-			dispatch(editNoteAction(editData));
+			if (!noteName) {
+				setNameError(true);
+				handleClickPopover(event);
+			} else if (!categoryContent) {
+				setCategoryError(true);
+				handleClickPopover(event);
+			} else {
+				handleClose();
+				dispatch(editNoteAction(editData));
+			}
 		}
-		handleClose();
 	};
 	const handleChangeCategory = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -78,13 +99,35 @@ export default function AddEditModal() {
 	const handleChangeCategoryContent = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
+		if (event.target.value) {
+			setCategoryError(false);
+		} else {
+			setCategoryError(true);
+		}
 		setCategoryContent(event.target.value);
 	};
 	const handleChangeCategoryName = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
+		if (event.target.value) {
+			setNameError(false);
+		} else {
+			setNameError(true);
+		}
 		setNoteName(event.target.value);
 	};
+
+	const handleClickPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClosePopover = () => {
+		setAnchorEl(null);
+	};
+
+	const open = Boolean(anchorEl);
+	const id = open ? 'simple-popover' : undefined;
+
 	return (
 		<div>
 			<Modal
@@ -128,69 +171,85 @@ export default function AddEditModal() {
 						flexDirection="column"
 						alignItems={'center'}
 					>
-						<FormControl>
-							<TextField
-								id="outlined-basic"
-								label="Note Name"
-								variant="outlined"
-								placeholder="Input Note Name"
-								value={noteName}
-								onChange={handleChangeCategoryName}
-								required
-							/>
-							<TextField
-								id="outlined-textarea"
-								label="Content"
-								placeholder="Input Note Content"
-								multiline
-								value={categoryContent}
-								onChange={handleChangeCategoryContent}
-								required
-							/>
-							<TextField
-								id="outlined-select-currency"
-								select
-								label="Select"
-								value={category}
-								onChange={handleChangeCategory}
-								helperText="Please Select Category"
-							>
-								{categories.map((option) => (
-									<MenuItem
-										key={option.catId}
-										value={option.catName}
-									>
-										{option.catName}
-									</MenuItem>
-								))}
-							</TextField>
+						<TextField
+							error={nameError}
+							id="outlined-basic"
+							label="Note Name"
+							variant="outlined"
+							placeholder="Input Note Name"
+							value={noteName}
+							onChange={handleChangeCategoryName}
+							required
+						/>
+						<TextField
+							error={categoryError}
+							id="outlined-textarea"
+							label="Content"
+							placeholder="Input Note Content"
+							multiline
+							value={categoryContent}
+							onChange={handleChangeCategoryContent}
+							required
+						/>
+						<TextField
+							id="outlined-select-currency"
+							select
+							label="Select"
+							value={category}
+							onChange={handleChangeCategory}
+							helperText="Please Select Category"
+						>
+							{categories.map((option) => (
+								<MenuItem
+									key={option.catId}
+									value={option.catName}
+								>
+									{option.catName}
+								</MenuItem>
+							))}
+						</TextField>
 
-							<Grid
-								container
-								justifyContent={'center'}
-								spacing={2}
-								m={0}
-							>
-								<Grid item={true} xs={4}>
-									<Button
-										onClick={handleClose}
-										variant="contained"
-									>
-										Cancel
-									</Button>
-								</Grid>
-								<Grid item={true} xs={4}>
-									<Button
-										onClick={(event) =>
-											handleAddConfirm(event)
-										}
-										variant="contained"
-									>
-										Confirm
-									</Button>
-								</Grid>
+						<Grid
+							container
+							justifyContent={'center'}
+							spacing={2}
+							m={0}
+						>
+							<Grid item={true} xs={4}>
+								<Button
+									onClick={handleClose}
+									variant="contained"
+								>
+									Cancel
+								</Button>
 							</Grid>
-						</FormControl>
+							<Grid item={true} xs={4}>
+								<Button
+									onClick={(event) => handleAddConfirm(event)}
+									variant="contained"
+								>
+									Confirm
+								</Button>
+								<Popover
+									id={id}
+									open={open}
+									anchorEl={anchorEl}
+									anchorOrigin={{
+										vertical: 'top',
+										horizontal: 'center',
+									}}
+									transformOrigin={{
+										vertical: 'bottom',
+										horizontal: 'center',
+									}}
+									onClose={handleClosePopover}
+								>
+									<Typography sx={{ p: 2 }}>
+										Fill in all fields
+									</Typography>
+								</Popover>
+							</Grid>
+						</Grid>
 					</Box>
 				</Box>
 			</Modal>
