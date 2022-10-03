@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
 import { faker } from '@faker-js/faker';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import { CancelTwoTone } from '@mui/icons-material';
-import styles from './AddEditModal.module.scss';
-import { Grid, MenuItem, Popover, TextField } from '@mui/material';
+import {
+	Box,
+	Grid,
+	MenuItem,
+	Popover,
+	TextField,
+	Modal,
+	Typography,
+	Button,
+} from '@mui/material';
 import categories from '../../../data/categoryList';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHiddenSelector } from '../../../store/selectors/visuallyHiddenSelector';
@@ -137,7 +141,7 @@ export default function AddEditModal() {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box className={styles.BoxStyle}>
+				<Box className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-25 p-2.5 shadow-md bg-gray-100 border-2  border-black">
 					<Grid container spacing={2}>
 						<Grid item={true} xs={11} justifyContent="center">
 							<Typography

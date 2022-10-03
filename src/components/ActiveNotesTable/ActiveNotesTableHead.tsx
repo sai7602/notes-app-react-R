@@ -11,7 +11,6 @@ import {
 
 import { visuallyHidden } from '@mui/utils';
 import { DeleteTwoTone, Inventory2TwoTone } from '@mui/icons-material';
-import '../ActiveNotesTable.scss';
 import { Data, Order } from '../../types';
 import { clearStorage } from '../../data/local-storage';
 interface HeadCell {
@@ -59,7 +58,6 @@ interface EnhancedTableProps {
 		event: React.MouseEvent<unknown>,
 		property: keyof Data
 	) => void;
-	// onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	order: Order;
 	orderBy: string;
 	rowCount: number;
@@ -76,9 +74,12 @@ function ActiveNotesTableHead(props: EnhancedTableProps) {
 		};
 
 	return (
-		<TableHead>
-			<TableRow>
-				<TableCell padding="checkbox"></TableCell>
+		<TableHead className=" bg-black-200 border-slate-100">
+			<TableRow className={`bg-slate-400  `}>
+				<TableCell
+					padding="checkbox"
+					className={`rounded-l-lg `}
+				></TableCell>
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
@@ -107,6 +108,7 @@ function ActiveNotesTableHead(props: EnhancedTableProps) {
 					<Inventory2TwoTone />
 				</TableCell>
 				<TableCell
+					className={`  rounded-r-lg `}
 					style={{ cursor: 'pointer' }}
 					align="right"
 					onClick={handleClearLocalStorage}

@@ -1,8 +1,4 @@
-import React from 'react';
-
 import { TableHead, TableRow, TableCell } from '@mui/material';
-
-import './ActiveNotesTable.scss';
 
 export interface Data {
 	id: string;
@@ -45,10 +41,19 @@ const headCells: readonly HeadCell[] = [
 function SummaryTableHead() {
 	return (
 		<TableHead>
-			<TableRow>
-				<TableCell padding="checkbox"></TableCell>
-				{headCells.map((headCell) => (
-					<TableCell key={headCell.id} align="center">
+			<TableRow className="bg-slate-400 ">
+				<TableCell
+					padding="checkbox"
+					className="rounded-l-lg"
+				></TableCell>
+				{headCells.map((headCell, index) => (
+					<TableCell
+						key={headCell.id}
+						align="center"
+						className={`${
+							index === headCells.length - 1 ? 'rounded-r-lg' : ''
+						}`}
+					>
 						{headCell.label}
 					</TableCell>
 				))}

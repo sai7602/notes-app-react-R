@@ -1,15 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import { Button, Box, Typography, Modal, Grid } from '@mui/material';
 import { CancelTwoTone } from '@mui/icons-material';
-import { Grid } from '@mui/material';
 import { visuallyHiddenSelector } from '../../../store/selectors/visuallyHiddenSelector';
 import { visibilityArchiveDelete } from '../../../store/actions/visibilityArchiveDelete';
 
-import styles from './DeleteArchiveNoteModal.module.scss';
 import { deleteNoteAction } from '../../../store/actions/deleteNoteAction';
 import { archiveNoteAction } from '../../../store/actions/archiveNoteAction';
 
@@ -54,7 +49,7 @@ export default function DeleteArchiveNoteModal() {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box className={styles.BoxStyle}>
+				<Box className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-25 p-2.5 shadow-md bg-gray-100 border-2  border-black">
 					<Grid container spacing={2}>
 						<Grid item={true} xs={11} justifyContent="center">
 							<Typography

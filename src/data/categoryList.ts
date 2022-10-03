@@ -12,7 +12,7 @@ const categories = [
 	{
 		catId: '3',
 		catName: 'Idea',
-		// categoryImg: require(`../images/idea-svgrepo-com.svg`),
+		// categoryImg: require(`../images/idea-svgrepo-com.svg`),xxx
 	},
 	{
 		catId: '4',

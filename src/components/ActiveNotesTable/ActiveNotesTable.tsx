@@ -29,7 +29,6 @@ import TableTitle from '../TableTitle';
 import AddEditModal from '../Modals/AddEditModal/AddEditModal';
 import { activeNoteSelector } from '../../store/selectors/activeNoteSelector';
 
-import '../ActiveNotesTable.scss';
 import { visibilityAddEditModal } from '../../store/actions/visibilityAddEditModal';
 import { visibilityArchiveDelete } from '../../store/actions/visibilityArchiveDelete';
 import DeleteArchiveNoteModal from '../Modals/DeleteArchiveNoteModal/DeleteArchiveNoteModal';
@@ -90,7 +89,7 @@ function ActiveNotesTable() {
 				<TableTitle title={'Active list'} />
 				<TableContainer>
 					<Table
-						className="table"
+						className="!border-separate !border-spacing-y-2 !m-0"
 						sx={{ minWidth: 750, p: 3, m: 3 }}
 						aria-labelledby="tableTitle"
 					>
@@ -117,8 +116,13 @@ function ActiveNotesTable() {
 											hover
 											tabIndex={-1}
 											key={row.id}
+											className={`${
+												index % 2 === 0
+													? 'bg-slate-100'
+													: ' bg-slate-300'
+											}`}
 										>
-											<TableCell>
+											<TableCell className="rounded-l-lg">
 												{categoryIcon(row.category)}
 											</TableCell>
 											<TableCell
@@ -169,6 +173,7 @@ function ActiveNotesTable() {
 												</Tooltip>
 											</TableCell>
 											<TableCell
+												className="rounded-r-lg"
 												style={{ cursor: 'pointer' }}
 												onClick={() =>
 													handleDelete(row.id)

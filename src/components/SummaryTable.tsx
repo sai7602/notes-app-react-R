@@ -10,7 +10,6 @@ import {
 
 import Paper from '@mui/material/Paper';
 
-import './ActiveNotesTable.scss';
 import categoryIcon from '../utils/categoryIcon';
 import TableTitle from './TableTitle';
 import SummaryTableHead from './SummaryTableHead';
@@ -26,7 +25,7 @@ function SummaryTable() {
 				<TableTitle title={'Summary list'} />
 				<TableContainer>
 					<Table
-						className="table"
+						className="!border-separate !border-spacing-y-2 !m-0"
 						sx={{ minWidth: 750, p: 3, m: 3 }}
 						aria-labelledby="tableTitle"
 					>
@@ -37,11 +36,16 @@ function SummaryTable() {
 
 								return (
 									<TableRow
+										className={`${
+											index % 2 === 0
+												? 'bg-slate-100'
+												: ' bg-slate-300'
+										}`}
 										hover
 										tabIndex={-1}
 										key={row.categoryId}
 									>
-										<TableCell>
+										<TableCell className="rounded-l-lg">
 											{categoryIcon(row.categoryName)}
 										</TableCell>
 										<TableCell
@@ -55,7 +59,10 @@ function SummaryTable() {
 										<TableCell align="center">
 											{row.totalActive}
 										</TableCell>
-										<TableCell align="center">
+										<TableCell
+											align="center"
+											className="rounded-r-lg"
+										>
 											{row.totalArchived}
 										</TableCell>
 									</TableRow>

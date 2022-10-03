@@ -19,7 +19,6 @@ import getComparator from '../../utils/getComparator';
 import stableSort from '../../utils/stableSort';
 import ArchiveNotesTableHead from './ArchiveNotesTableHead';
 import TableTitle from '../TableTitle';
-import '../ActiveNotesTable.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { archivedNoteSelector } from '../../store/selectors/archivedNoteSelector';
 import { visibilityArchiveDelete } from '../../store/actions/visibilityArchiveDelete';
@@ -66,7 +65,7 @@ function ArchiveNotesTable() {
 				<TableTitle title={'Archived list'} />
 				<TableContainer>
 					<Table
-						className="table"
+						className="!border-separate !border-spacing-y-2 !m-0"
 						sx={{ minWidth: 750, p: 3, m: 3 }}
 						aria-labelledby="tableTitle"
 					>
@@ -89,12 +88,17 @@ function ArchiveNotesTable() {
 									const labelId = `enhanced-table-checkbox-${index}`;
 
 									return (
-										<TableRow
+										<TableRow 
 											hover
 											tabIndex={-1}
 											key={row.id}
+											className={`${
+												index % 2 === 0
+													? 'bg-slate-100'
+													: ' bg-slate-300'
+											}`}
 										>
-											<TableCell>
+											<TableCell className="rounded-l-lg">
 												{categoryIcon(row.category)}
 											</TableCell>
 											<TableCell
@@ -118,6 +122,7 @@ function ArchiveNotesTable() {
 											</TableCell>
 
 											<TableCell
+												className="rounded-r-lg"
 												style={{ cursor: 'pointer' }}
 												onClick={() =>
 													handleArchive(row.id)

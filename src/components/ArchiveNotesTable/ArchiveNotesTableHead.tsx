@@ -4,7 +4,6 @@ import { TableHead, TableRow, TableCell, TableSortLabel } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { Inventory2TwoTone } from '@mui/icons-material';
 import { Data, Order } from '../../types';
-import '../ActiveNotesTable.scss';
 interface HeadCell {
 	disablePadding: boolean;
 	id: keyof Data;
@@ -64,8 +63,11 @@ function ArchiveNotesTableHead(props: EnhancedTableProps) {
 
 	return (
 		<TableHead>
-			<TableRow>
-				<TableCell padding="checkbox"></TableCell>
+			<TableRow className={`bg-slate-400`}>
+				<TableCell
+					padding="checkbox"
+					className={`rounded-l-lg `}
+				></TableCell>
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
@@ -89,7 +91,7 @@ function ArchiveNotesTableHead(props: EnhancedTableProps) {
 						</TableSortLabel>
 					</TableCell>
 				))}
-				<TableCell align="right">
+				<TableCell align="right" className={`rounded-r-lg `}>
 					<Inventory2TwoTone />
 				</TableCell>
 			</TableRow>
