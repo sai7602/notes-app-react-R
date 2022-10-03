@@ -2,7 +2,7 @@ name: Build and deploy to GitHub Pages
 
 on:
     push:
-        branches: [tailwindbuild]
+        branches: [tailwindcss-and-storybook]
 
 jobs:
     build-and-deploy:
