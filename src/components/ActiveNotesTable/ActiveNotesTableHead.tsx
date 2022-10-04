@@ -74,8 +74,8 @@ function ActiveNotesTableHead(props: EnhancedTableProps) {
 		};
 
 	return (
-		<TableHead className=" bg-black-200 border-slate-100">
-			<TableRow className={`bg-slate-400  `}>
+		<TableHead>
+			<TableRow className={`bg-gray-500`}>
 				<TableCell
 					padding="checkbox"
 					className={`rounded-l-lg `}
@@ -108,7 +108,7 @@ function ActiveNotesTableHead(props: EnhancedTableProps) {
 					<Inventory2TwoTone />
 				</TableCell>
 				<TableCell
-					className={`  rounded-r-lg `}
+					className={`rounded-r-lg`}
 					style={{ cursor: 'pointer' }}
 					align="right"
 					onClick={handleClearLocalStorage}

@@ -41,7 +41,7 @@ const headCells: readonly HeadCell[] = [
 function SummaryTableHead() {
 	return (
 		<TableHead>
-			<TableRow className="bg-slate-400 ">
+			<TableRow className="bg-gray-500 ">
 				<TableCell
 					padding="checkbox"
 					className="rounded-l-lg"

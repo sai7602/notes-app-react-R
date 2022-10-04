@@ -65,8 +65,14 @@ function ArchiveNotesTable() {
 				<TableTitle title={'Archived list'} />
 				<TableContainer>
 					<Table
-						className="!border-separate !border-spacing-y-2 !m-0"
-						sx={{ minWidth: 750, p: 3, m: 3 }}
+						sx={{
+							minWidth: 750,
+							width: '95%',
+							p: 3,
+							m: 3,
+							borderCollapse: 'separate',
+							borderSpacing: '0 10px',
+						}}
 						aria-labelledby="tableTitle"
 					>
 						<ArchiveNotesTableHead
@@ -88,14 +94,14 @@ function ArchiveNotesTable() {
 									const labelId = `enhanced-table-checkbox-${index}`;
 
 									return (
-										<TableRow 
+										<TableRow
 											hover
 											tabIndex={-1}
 											key={row.id}
 											className={`${
 												index % 2 === 0
-													? 'bg-slate-100'
-													: ' bg-slate-300'
+													? 'bg-gray-100'
+													: ' bg-gray-300'
 											}`}
 										>
 											<TableCell className="rounded-l-lg">
